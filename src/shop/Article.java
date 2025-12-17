@@ -1,6 +1,14 @@
 package shop;
 
 public class Article {
+    /** 
+    Represents an article in the shop with its details.
+    Attributes:
+    - description: A brief description of the article.
+    - brand: The brand of the article.
+    - unitaryPrice: The price per unit of the article.
+    - idArticle: A unique identifier for the article.
+    */
 
     private String description;
     private String brand;
