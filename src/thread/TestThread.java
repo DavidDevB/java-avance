@@ -1,5 +1,7 @@
 package thread;
 
+import java.time.format.TextStyle;
+
 public class TestThread extends Thread {
     public TestThread(String name) {
         super(name);
@@ -7,17 +9,21 @@ public class TestThread extends Thread {
 
     public void run(){
         for(int i = 0; i < 5; i++) {
-            for (int j = 0; j < 5; j++) {
-                System.out.print((i + 1) + new String(new char[i + 1]).replace("\0", "-"));
-            }
-            System.out.println();
+            System.out.println(this.getName());
         }
     }
 
     public static void main(String[] args) {
-        TestThread t1 = new TestThread("Thread-1");
-
+        TestThread t1 = new TestThread("1-");
+        TestThread t2 = new TestThread("2--");
+        TestThread t3 = new TestThread("3---");
+        TestThread t4 = new TestThread("4----");
+        TestThread t5 = new TestThread("5-----");
          t1.start();
+            t2.start();
+            t3.start();
+            t4.start();
+            t5.start();
         
 
         
