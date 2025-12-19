@@ -11,6 +11,13 @@ import java.util.Map;
 public class Resto {
 
 	public static void main(String[] args) {
+		/**
+		 * Create a restaurant ordering system that allows users to select items from different categories
+		 * (entry, dish, trimming, drink, dessert) to create a menu.
+		 * The program should prompt the user to choose items from each category,
+		 * store the selected items in a list, and then display the final menu along with the total price.
+		 * The program should also write the final menu and total price to a text file named "menus.txt".
+		 */
 		
 		Scanner scan = new Scanner(System.in);
 		
