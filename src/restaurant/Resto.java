@@ -1,6 +1,8 @@
 package restaurant;
 
 import java.util.Scanner;
+import java.io.FileWriter;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -129,15 +131,20 @@ public class Resto {
             }
 			finalMenus.get(i).put(new ArrayList<>(desserts.keySet()).get(whichDessert - 1).toLowerCase(),
                                   new ArrayList<>(desserts.values()).get(whichDessert - 1));
-			
-			System.out.println("Command " + (i + 1) + " summary:");
-            for (String key : finalMenus.get(i).keySet()) {
-                System.out.println("- " + key + ": " + finalMenus.get(i).get(key) + " $");
-            }
-            System.out.println("Total: " + finalMenus.get(i).values().stream().mapToDouble(Double::doubleValue).sum() + " $");
+			try (PrintWriter fileWriter = new PrintWriter(new FileWriter("menus.txt"))) {
+				System.out.println("Command " + (i + 1) + " summary:");
+				fileWriter.println("Command " + (i + 1) + " summary:");
+				for (String key : finalMenus.get(i).keySet()) {
+					System.out.println("- " + key + ": " + finalMenus.get(i).get(key) + " $");
+					fileWriter.println("- " + key + ": " + finalMenus.get(i).get(key) + " $");
+				}
+				System.out.println("Total: " + finalMenus.get(i).values().stream().mapToDouble(Double::doubleValue).sum() + " $");
+				fileWriter.println("Total: " + finalMenus.get(i).values().stream().mapToDouble(Double::doubleValue).sum() + " $");
+			} catch (Exception e) {
+				System.out.println("An error occurred while writing to the file: " + e.getMessage());
+			}
 		}
-		scan.close();
+    	scan.close();
 	}
-	
-	
 }
+	
