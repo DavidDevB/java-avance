@@ -11,16 +11,21 @@ public class Advisor {
         this.lastName = lastName;
     }
 
-    public BankAccount openAccount(String number) {
+    public BankAccount openAccount(String number, String firstName, String lastName) {
         BankAccount newAccount = new BankAccount(number, firstName + " " + lastName);
         BankAccountDao BankAccountDao = new BankAccountDao();
         BankAccount saveAccount = BankAccountDao.save(newAccount);
         return saveAccount;
     }
 
-    public boolean closeAccount(int accountId) {
+    public boolean closeAccount(String number) {
         BankAccountDao bankAccountDao = new BankAccountDao();
-        return bankAccountDao.delete(accountId);
+        return bankAccountDao.delete(number);
+    }
+
+    public BankAccount getAccount(String number) {
+        BankAccountDao bankAccountDao = new BankAccountDao();
+        return bankAccountDao.read(number);
     }
 
     public void makeDeposit(BankAccount account, double amount) {

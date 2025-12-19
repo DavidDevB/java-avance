@@ -24,21 +24,22 @@ public class BankAccountDao extends Dao {
     }
 
     @Override
-    public BankAccount read(int id) {
-        String sql = "SELECT * FROM bank_accounts WHERE accountId = ?";
+    public BankAccount read(String number) {
+        // Logic to read the bank account from the database by number
+        String sql = "SELECT * FROM bank_accounts WHERE number = ?";
+        BankAccount account = null;
         try ( PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setInt(1, id);
+            stmt.setString(1, number);
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
-                BankAccount account = new BankAccount(rs.getString("number"), rs.getString("owner"));
-                account.setAccountId(rs.getInt("accountId"));
+                account = new BankAccount(rs.getString("number"), rs.getString("owner"));
                 account.setBalance(rs.getDouble("balance"));
-                return account;
+                account.setAccountId(rs.getInt("accountId"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return null;
+        return account;
     }
 
     @Override
@@ -58,11 +59,11 @@ public class BankAccountDao extends Dao {
     }
 
     @Override
-    public boolean delete(int id) {
-        // Logic to delete the bank account from the database by ID
-        String sql = "DELETE FROM bank_accounts WHERE accountId = ?";
+    public boolean delete(String number) {
+        // Logic to delete the bank account from the database by number
+        String sql = "DELETE FROM bank_accounts WHERE number = ?";
         try ( PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setInt(1, id);
+            stmt.setString(1, number);
             stmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
