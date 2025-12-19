@@ -1,0 +1,58 @@
+package tp_bank.daos;
+import java.beans.Statement;
+
+import tp_bank.models.BankAccount;
+import tp_bank.daos.Dao;
+import java.sql.SQLException;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+
+public class BankAccountDao extends Dao {
+    
+    @Override
+    public BankAccount save(BankAccount account) {
+        // Logic to save the bank account to the database
+        String sql = "INSERT INTO bank_accounts (number, owner, balance) VALUES (?, ?, ?)";
+        try ( PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setString(1, account.getNumber());
+            stmt.setString(2, account.getOwner());
+            stmt.setDouble(3, account.getBalance());
+            stmt.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return account;
+    }
+
+    @Override
+    public BankAccount read(int id) {
+        String sql = "SELECT * FROM bank_accounts WHERE accountId = ?";
+        try ( PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setInt(1, id);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                BankAccount account = new BankAccount(rs.getString("number"), rs.getString("owner"));
+                account.setAccountId(rs.getInt("accountId"));
+                account.setBalance(rs.getDouble("balance"));
+                return account;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public BankAccount update(BankAccount account) {
+        // Logic to update the bank account in the database
+        
+        return account; // Return the updated account (for simplicity)
+    }
+
+    @Override
+    public boolean delete(int id) {
+        // Logic to delete the bank account from the database by ID
+        
+        return true; // Placeholder
+    }
+}
