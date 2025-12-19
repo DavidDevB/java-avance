@@ -1,3 +1,4 @@
+
 package tp_bank.daos;
 
 import java.sql.Connection;
@@ -42,5 +43,4 @@ public abstract class Dao {
     public abstract BankAccount update(BankAccount obj);
 
     public abstract boolean delete(int id);
-
 }
