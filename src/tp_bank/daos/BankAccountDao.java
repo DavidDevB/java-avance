@@ -1,8 +1,6 @@
 package tp_bank.daos;
-import java.beans.Statement;
 
 import tp_bank.models.BankAccount;
-import tp_bank.daos.Dao;
 import java.sql.SQLException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -45,14 +43,29 @@ public class BankAccountDao extends Dao {
     @Override
     public BankAccount update(BankAccount account) {
         // Logic to update the bank account in the database
-        
+        String sql = "UPDATE bank_accounts SET number = ?, owner = ?, balance = ? WHERE accountId = ?";
+        try ( PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setString(1, account.getNumber());
+            stmt.setString(2, account.getOwner());
+            stmt.setDouble(3, account.getBalance());
+            stmt.setInt(4, account.getAccountId());
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return account; // Return the updated account (for simplicity)
     }
 
     @Override
     public boolean delete(int id) {
         // Logic to delete the bank account from the database by ID
-        
+        String sql = "DELETE FROM bank_accounts WHERE accountId = ?";
+        try ( PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setInt(1, id);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return true; // Placeholder
     }
 }
