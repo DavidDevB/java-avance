@@ -24,22 +24,43 @@ public class Advisor {
     }
 
     public void makeDeposit(BankAccount account, double amount) {
-        double newBalance = account.getBalance() + amount;
-        account.setBalance(newBalance);
-        BankAccountDao bankAccountDao = new BankAccountDao();
-        bankAccountDao.update(account);
+        if (amount <= 0) {
+            throw new IllegalArgumentException("Le montant du dépôt doit être positif.");
+        }
+        try {
+            double newBalance = account.getBalance() + amount;
+            account.setBalance(newBalance);
+            BankAccountDao bankAccountDao = new BankAccountDao();
+            bankAccountDao.update(account);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void makeWithdrawal(BankAccount account, double amount) {
-        double newBalance = account.getBalance() - amount;
-        account.setBalance(newBalance);
-        BankAccountDao bankAccountDao = new BankAccountDao();
-        bankAccountDao.update(account);
+        if (amount <= 0) {
+            throw new IllegalArgumentException("Le montant du retrait doit être positif.");
+        }
+        try {
+            double newBalance = account.getBalance() - amount;
+            account.setBalance(newBalance);
+            BankAccountDao bankAccountDao = new BankAccountDao();
+            bankAccountDao.update(account);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void makeTransfer(BankAccount fromAccount, BankAccount toAccount, double amount) {
-        makeWithdrawal(fromAccount, amount);
-        makeDeposit(toAccount, amount);
+        if (amount <= 0) {
+            throw new IllegalArgumentException("Le montant du transfert doit être positif.");
+        }
+        try {
+            makeWithdrawal(fromAccount, amount);
+            makeDeposit(toAccount, amount);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public String getFirstName() {
